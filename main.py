@@ -82,16 +82,17 @@ def listar_manutencao():
     conn.close()
 
 
-    return [
-    {
-        "id_usuario": row[0],
-        "nome": row[1],
-        "email": row[2],
-        "senha": row[3],
-        "preferencias": row[4]
-    }
-    for row in rows
-]
+    return[
+        {
+            "id_usuario": row[0],
+            "nome": row[1],
+            "email": row[2],
+            "senha": row[3],
+            "preferencias": row[4]
+        }
+        for row in rows
+    ]
+
 
 
 # Rota para obter uma tarefa específica
@@ -106,7 +107,6 @@ def obter_manutencao(manutencao_id_usuario: int):
 
     cursor.execute('SELECT * FROM T_HFLL_USUARIO WHERE ID_USUARIO = :valor1', valor1=manutencao_id_usuario)
 
-
     row = cursor.fetchone()
    
     if row:
@@ -119,9 +119,6 @@ def obter_manutencao(manutencao_id_usuario: int):
         }
     raise HTTPException(status_code=404, detail="Usuário não encontrado.")
 
-
-
-
 # Rota para atualizar uma tarefa completa
 @app.put("/Manutencao/{manutencao_id_usuario}")
 def atualizar_manutencao(manutencao_id_usuario: int, manutencao_atualizada: ManutencaoCreate):
@@ -131,8 +128,7 @@ def atualizar_manutencao(manutencao_id_usuario: int, manutencao_atualizada: Manu
 
     cursor = conn.cursor()
 
-
-    cursor.execute("UPDATE T_HFLL_USUARIO SET NOME=:valor2, EMAIL=:valor3, SENHA=:valor4, PREFERENCIAS=:valor5 WHERE ID=:valor1", valor1=manutencao_id_usuario, valor2=manutencao_atualizada.nome, valor3=manutencao_atualizada.email, valor4=manutencao_atualizada.senha, valor5=manutencao_atualizada.preferencias)
+    cursor.execute("UPDATE T_HFLL_USUARIO SET NOME=:valor2, EMAIL=:valor3, SENHA=:valor4, PREFERENCIAS=:valor5 WHERE ID_USUARIO=:valor1", valor1=manutencao_id_usuario, valor2=manutencao_atualizada.nome, valor3=manutencao_atualizada.email, valor4=manutencao_atualizada.senha, valor5=manutencao_atualizada.preferencias)
     conn.commit()
 
 
